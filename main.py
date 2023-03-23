@@ -21,13 +21,18 @@ class HelloWorld(Resource):
                             "language": "vi-VN"
                         },
                         data={
-                            "code": _params.get("code"),
+                            "code": _params.get("code","VNM"),
                             "s": "0",
                             "t": "",
                             "__RequestVerificationToken": "bx-iabZXI1TIAkI4_J0Cmz5Bb2_sru91ot_TXq8nd0JNxhjOIr9UOzeZNBj3Bmw5fMNH6_Iw-b47M5KsCf2pQeW_s-hL6a28_y3I_ghgX9g1"
                         }
                     )
-        return _res.json()
+        if _res.status_code != 200:
+            return {}
+        try: 
+            return _res.json()
+        except: 
+            return {}
 
 api.add_resource(HelloWorld, '/')
 
