@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Resource, Api
 import requests
 from flask_cors import CORS
@@ -9,7 +9,7 @@ api = Api(app)
 
 class HelloWorld(Resource):
     def get(self):
-
+        _params = request.args.to_dict()
         _res = requests.post('https://finance.vietstock.vn/company/tradinginfo',
                         headers={
                             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -21,7 +21,7 @@ class HelloWorld(Resource):
                             "language": "vi-VN"
                         },
                         data={
-                            "code": "VNM",
+                            "code": _params.get("code"),
                             "s": "0",
                             "t": "",
                             "__RequestVerificationToken": "bx-iabZXI1TIAkI4_J0Cmz5Bb2_sru91ot_TXq8nd0JNxhjOIr9UOzeZNBj3Bmw5fMNH6_Iw-b47M5KsCf2pQeW_s-hL6a28_y3I_ghgX9g1"
